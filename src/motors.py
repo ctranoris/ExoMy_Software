@@ -104,6 +104,8 @@ class Motors():
         # Loop through pin dictionary. The items key is the wheel_name and the value the pin.
         for wheel_name, motor_pin in self.pins['steer'].items():
             duty_cycle = int(self.steering_pwm_neutral[wheel_name] + steering_command[wheel_name]/90.0 * self.steering_pwm_range)
+            if (motor_pin==self.pins['steer'][self.RR]) or (motor_pin==self.pins['steer'][self.RL]):
+                 duty_cycle = int(self.steering_pwm_neutral[wheel_name] - steering_command[wheel_name]/90.0 * self.steering_pwm_range)
 
             self.pwm.set_pwm(motor_pin, 0, duty_cycle)
 
