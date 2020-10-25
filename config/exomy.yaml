@@ -42,4 +42,4 @@ drive_offset_rl: 300
 drive_offset_rr: 300
 
 drive_offset: 307
-drive_range: 200
+drive_range: 100
