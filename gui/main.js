@@ -258,27 +258,3 @@ function sendMovementValues() {
 	}
 }
 
-
-
-/*
- * This function is run once when the page is loading
- */
-window.onload = function () { 
-	var h = window.innerHeight - 100;
-
-}
-
-
-
-
-/*
- * This function is run once when the page has finished loading
- */
-$(document).ready(function () {
-
-	
-	controllerOn();
-	if (joypad.instances[0] != null && joypad.instances[0].connected) updateInfo(joypad.instances[0]);
-	
-	
-});

@@ -6,7 +6,7 @@
 
   <script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
   <script src="./node_modules/nipplejs/dist/nipplejs.js"></script>
-    <script src="./joypad.min.js') }}"></script>
+  <script src="./joypad.min.js"></script>
   <script type="text/javascript" type="text/javascript">
     var publishImmidiately = true;
     var host_url = window.location.hostname;
@@ -80,12 +80,98 @@
         console.log('End function called')
       });
     }
+
+
+
+
+
+    var gamePadActive = 0;
+
+
+    function controllerOn() {
+	console.log("In controllerOn");
+	if (gamePadActive == 0) {
+		resetInfo();
+		joypad.set({ axisMovementThreshold: 0.2 });
+		joypad.on('connect', e => updateInfo(e));
+		joypad.on('disconnect', e => resetInfo(e));
+		joypad.on('axis_move', e => {
+			console.log(e.detail);
+			return moveAxis(e);
+		});
+		joypad.on('button_press', e => {
+			console.log(e.detail);
+			return pressButton(e);
+		});	
+		moveXY[0] = 0;
+		moveXY[2] = 0;
+		gamePadActive = 1;
+	}
+    }
+
+
+    // When controller is disconnected
+     function resetInfo(e) {
+	if (gamePadActive == 1) {
+		clearInterval(gamepadTimer);
+		moveXY[0] = 0;
+		moveXY[2] = 0;
+		sendMovementValues();
+		gamePadActive = 0;
+	}
+	document.getElementById("gpstatus").innerHTML = "Disconnected";
+    }
+
+
+	// When a new controller is connected
+	function updateInfo(e) {
+		const { gamepad } = e;
+		document.getElementById("gpstatus").innerHTML = "Connected";
+		gamepadTimer = setInterval(sendMovementValues, 100); 
+	}
+
+
+
+	// When a controller axis movement is detected
+	function moveAxis(e) {
+		const { axis, axisMovementValue } = e.detail;
+		
+		if (axis === 0) {
+			moveXY[0] = axisMovementValue;
+		} else if (axis === 1) {
+			moveXY[2] = axisMovementValue;
+		} else if (axis === 2) {
+			moveYP[0] = axisMovementValue;
+		} else if (axis === 3) {
+			moveYP[2] = axisMovementValue;
+		} 
+	}
+
+	// When a controller button is pressed
+	function pressButton(e) {
+		const { buttonName } = e.detail;
+		if (buttonName === 'button_0') {
+			console.log("button_0");
+		}	
+
+		// B or Circle button 
+		else if (buttonName === 'button_1') {
+			console.log("button_1");
+		}
+	}
+
+
     window.onload = function () {
+       console.log("window.onload");
       createJoystick();
       // Video output
       stream_url = '//' + host_url + ':8080/stream?topic=/pi_cam/image_raw';
       console.log(stream_url);
       document.getElementById("video_output").src = stream_url;
+
+      controllerOn();
+      if (joypad.instances[0] != null && joypad.instances[0].connected) updateInfo(joypad.instances[0]);
+
     }
 
     joy_listener = new ROSLIB.Topic({
@@ -116,7 +202,6 @@
     }
 
   </script>
-    <script src="./main.js') }}"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
@@ -135,6 +220,8 @@
       </div>
       <div class="right" id="right">
         <div class="button_container">
+          <p>ROS status: <span id="status">status</span></p>
+          <p>Gamepad status: <span id="gpstatus">status</span></p>
           <button class="button buttonY" onclick="button_clicked(3)">CRABBING</button>
           <button class="button buttonX" onclick="button_clicked(0)">SPOT TURN</button>
           <button class="button buttonA" onclick="button_clicked(1)">ACKERMANN</button>
