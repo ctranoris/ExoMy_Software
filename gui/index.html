@@ -103,8 +103,6 @@
 			console.log(e.detail);
 			return pressButton(e);
 		});	
-		moveXY[0] = 0;
-		moveXY[2] = 0;
 		gamePadActive = 1;
 	}
     }
@@ -114,8 +112,6 @@
      function resetInfo(e) {
 	if (gamePadActive == 1) {
 		clearInterval(gamepadTimer);
-		moveXY[0] = 0;
-		moveXY[2] = 0;
 		sendMovementValues();
 		gamePadActive = 0;
 	}
@@ -137,13 +133,13 @@
 		const { axis, axisMovementValue } = e.detail;
 		
 		if (axis === 0) {
-			moveXY[0] = axisMovementValue;
+			console.log("axis"  + axis);
 		} else if (axis === 1) {
-			moveXY[2] = axisMovementValue;
+			console.log("axis"  + axis);
 		} else if (axis === 2) {
-			moveYP[0] = axisMovementValue;
+			console.log("axis"  + axis);
 		} else if (axis === 3) {
-			moveYP[2] = axisMovementValue;
+			console.log("axis"  + axis);
 		} 
 	}
 
