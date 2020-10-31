@@ -146,10 +146,15 @@
 		} else if (axis === 3) {
 			console.log("axis"  + axis);
 		} 
+		
+		if ( abs(x) < 0.05 ) && ( abs(x) < 0.05 ){
+			x = 0;
+			y=  0;
+		}			
 
-	        axes = [x, y, 0, 0, 0, 0]
+		axes = [x, y, 0, 0, 0, 0]
 
-	        if (publishImmidiately) {
+	    if (publishImmidiately) {
         	  publishImmidiately = false;
 	          joy_event()
 	
