@@ -13,7 +13,7 @@
     </node>
 
     <node pkg="usb_cam" type="usb_cam_node" name="pi_cam" respawn="false" output="screen">
-        <param name="framerate" value="15"/>
+        <param name="framerate" value="25"/>
         <param name="video_device" value="/dev/video0"/>
         <param name="image_width" value="800"/>
         <param name="image_height" value="600"/>

@@ -183,6 +183,7 @@ class Rover():
         :param int driving_command: Drive speed command range from -100 to 100
         :param int stering_command: Turning radius command with the values 0(left) +90(forward) -90(backward)  +-180(right)
         '''
+	motor_speeds = [0]*6
         v = driving_command
         if(steering_command < 0):
             v *= -1
@@ -218,11 +219,7 @@ class Rover():
             v4 = int(v*r4/r1)
             v5 = int(v*r5/r1)
             v6 = v4
-        
-        
-        
 
-        motor_speeds = [0]*6
         if (self.locomotion_mode == LocomotionMode.FAKE_ACKERMANN.value):
             if(driving_command > 0 and steering_command >= 0):
                 motor_speeds[self.FL] = 50
