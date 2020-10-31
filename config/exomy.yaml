@@ -27,7 +27,7 @@ pin_steer_rr: 8
 steer_offset_fl: 245
 steer_offset_fr: 340
 steer_offset_cl: 240
-steer_offset_cr: 310
+steer_offset_cr: 235
 steer_offset_rl: 315
 steer_offset_rr: 300
 
