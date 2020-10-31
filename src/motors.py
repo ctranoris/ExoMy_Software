@@ -115,6 +115,7 @@ class Motors():
             duty_cycle = int(self.driving_pwm_neutral +
                              driving_command[wheel_name]/100.0 * self.driving_pwm_range * self.wheel_directions[wheel_name])
 
+            rospy.loginfo("driving_command[wheel_name] = " + driving_command[wheel_name])
             self.pwm.set_pwm(motor_pin, 0, duty_cycle)
 
     def stopMotors(self):
