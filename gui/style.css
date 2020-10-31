@@ -52,11 +52,26 @@ body {
 
 }
 
+.buttonShutdown{
+    background-color: red;
+    grid-row: 5;
+    width: 50%;
+    font-size: 12px;
+}
+
+.infolabel{
+    background-color: white;
+    grid-row: 6;
+    width: 100%;
+    font-size: 12px;
+}
+
+
 .button_container {
     position: absolute;
     display: grid;
     left: 25%;
-    top: 25%;
+    top: 20%;
     height: 50%;
     width: 50%;
 }
