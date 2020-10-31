@@ -20,7 +20,9 @@
     // Initialize Axes and Buttons arrays
     var axes = [0, 0, 0, 0, 0, 0];
     var buttons = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
+    var x = 0;
+    var y = 0;	
+    
     ros.on('connection', function () {
       document.getElementById("status").innerHTML = "Connected";
     });
@@ -36,7 +38,7 @@
     createJoystick = function () {
       var options = {
         zone: document.getElementById('joy_container'),
-        threshold: 0.1,
+        threshold: 0.00,
         position: { left: '50%', top: '50%' },
         mode: 'static',
         size: 150,
@@ -49,8 +51,8 @@
 
       self.manager.on('move', function (event, nipple) {
         var max_distance = 75;
-        var x = -Math.cos(nipple.angle.radian) * nipple.distance / max_distance;
-        var y = Math.sin(nipple.angle.radian) * nipple.distance / max_distance;
+        x = -Math.cos(nipple.angle.radian) * nipple.distance / max_distance;
+        y = Math.sin(nipple.angle.radian) * nipple.distance / max_distance;
         axes = [x, y, 0, 0, 0, 0]
 
         // nipplejs is triggering events when joystick moves each pixel
@@ -88,11 +90,12 @@
     var gamePadActive = 0;
 
 
+
     function controllerOn() {
 	console.log("In controllerOn");
 	if (gamePadActive == 0) {
 		resetInfo();
-		joypad.set({ axisMovementThreshold: 0.2 });
+		joypad.set({ axisMovementThreshold: 0.1 });
 		joypad.on('connect', e => updateInfo(e));
 		joypad.on('disconnect', e => resetInfo(e));
 		joypad.on('axis_move', e => {
@@ -132,36 +135,31 @@
 	function moveAxis(e) {
 		const { axis, axisMovementValue } = e.detail;
 		
-		var x = 0;
-		var y = 0;
 			
 		if (axis === 0 ) {
 			console.log("axis"  + axis);
 			x = -axisMovementValue;
-		} else if (axis === 1) {
+		} 
+		if (axis === 1) {
 			console.log("axis"  + axis);
 			y = -axisMovementValue;
-		} else if (axis === 2) {
+		} 
+		if (axis === 2) {
 			console.log("axis"  + axis);
-		} else if (axis === 3) {
+		} 
+		if (axis === 3) {
 			console.log("axis"  + axis);
 		} 
 		
-		if ( abs(x) < 0.05 ) && ( abs(x) < 0.05 ){
+		if ( ( Math.abs(x) < 0.20 ) && ( Math.abs(y) < 0.20 ) ){
 			x = 0;
-			y=  0;
+			y =  0;
 		}			
 
-		axes = [x, y, 0, 0, 0, 0]
+		axes = [x, y, 0, 0, 0, 0];
 
-	    if (publishImmidiately) {
-        	  publishImmidiately = false;
-	          joy_event()
+		joy_event();
 	
-	          setTimeout(function () {
-	            publishImmidiately = true;
-        	  }, 50);
-	        }
 	
 
 
