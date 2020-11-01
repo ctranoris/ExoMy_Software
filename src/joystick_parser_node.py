@@ -64,11 +64,6 @@ def callback(data):
                 "Exceptional value for [motors_enabled] = {}".format(motors_enabled))
             motors_enabled = False
 
-    #shutdown
-    if (data.buttons[8] == 1):
-        call("sudo shutdown -h now", shell=True)
-        
-        
     rover_cmd.motors_enabled = motors_enabled
 
     # The velocity is decoded as value between 0...100

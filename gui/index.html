@@ -232,6 +232,21 @@
       buttons[button_index] = 0;
     }
 
+    shutdownrpi = function () {
+	var surl= 'http://' + host_url + ':8099/shutdown'
+
+	console.log("shutdown");
+	const Http = new XMLHttpRequest();
+	Http.open("GET", surl);
+	Http.send();
+	
+	Http.onreadystatechange = (e) => {
+		console.log(Http.responseText);
+		console.log("shutdown OK!");
+	}
+
+    }
+
   </script>
   <link rel="stylesheet" type="text/css" href="style.css">
 
@@ -255,7 +270,7 @@
           <button class="button buttonX" onclick="button_clicked(0)">SPOT TURN</button>
           <button class="button buttonA" onclick="button_clicked(1)">ACKERMANN</button>
           <button class="button buttonStart" onclick="button_clicked(9)">MOTORS</button>
-          <button class="button buttonShutdown" onclick="button_clicked(8)">Shut down</button>
+          <button class="button buttonShutdown" onclick="shutdownrpi()">Shut down</button>
           <div class="infolabel">ROS status: <span id="status">status</span>
           <br/>Gamepad status: <span id="gpstatus">status</span></div>
         </div>
