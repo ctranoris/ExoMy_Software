@@ -9,7 +9,7 @@ then
 	cd /root/exomy_ws
 	catkin_make
 	http-server src/exomy/gui -p 8000 &
-
+	python src/exomy/scripts/rpi_stream.py &
 	source devel/setup.bash
 	roslaunch exomy exomy.launch
 

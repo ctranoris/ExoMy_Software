@@ -196,7 +196,9 @@
        console.log("window.onload");
       createJoystick();
       // Video output
-      stream_url = '//' + host_url + ':8080/stream?topic=/pi_cam/image_raw';
+      //stream_url = '//' + host_url + ':8080/stream?topic=/pi_cam/image_raw';
+	stream_url = '//' + host_url + ':8088/stream.mjpg';
+
       console.log(stream_url);
       document.getElementById("video_output").src = stream_url;
 
